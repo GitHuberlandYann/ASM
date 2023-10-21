@@ -12,7 +12,7 @@ size_t ft_strlen( const char *s );
 char *ft_strcpy( char *dst, const char *src );
 int ft_strcmp( const char *s1, const char *s2 );
 ssize_t ft_write( int fd, const void *buf, size_t nbyte );
-// ssize_t ft_read(int fd, void *buf, size_t nbyte);
+ssize_t ft_read( int fd, void *buf, size_t nbyte );
 // char *ft_strdup(const char *s1);
 
 int main( void )
@@ -30,7 +30,23 @@ int main( void )
 	printf("asm cmp = %d\n", ft_strcmp(src, cpy));
 	printf("org cmp = %d\n", strcmp(src, cpy));
 
-	ft_write(1, WRITEN, ft_strlen(WRITEN));
-	write(1, WRITEN, strlen(WRITEN));
+	ssize_t len = ft_write(1, WRITEN, ft_strlen(WRITEN));
+	ssize_t olen = write(1, WRITEN, strlen(WRITEN));
+	printf("ft len is %ld vs %ld\n", len, olen);
+
+	len = ft_read(0, dst, 300);
+	if (len >= 0) {
+		dst[len] = '\0';
+		printf("size %ld, buf is %s\n", len, dst);
+	} else {
+		printf("error on read\n");
+	}
+	olen = ft_read(0, dst, 300);
+	if (olen >= 0) {
+		dst[olen] = '\0';
+		printf("size %ld, buf is %s\n", olen, dst);;
+	} else {
+		printf("error on read\n");
+	}
 	return (0);
 }

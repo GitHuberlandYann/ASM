@@ -19,4 +19,4 @@ loop:
 	        inc         rax
 	        cmp         byte [rdi + rax], 0
 	        jne         loop
-	        ret; is this usefull?
+	        ret

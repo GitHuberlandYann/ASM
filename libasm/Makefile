@@ -3,7 +3,7 @@ SRCS_DIR   = Sources
 OBJS_DIR   = Objs
 TESTFILE   = Mains/hello
 
-FILES      = ft_strlen ft_strcpy ft_strcmp ft_write
+FILES      = ft_strlen ft_strcpy ft_strcmp ft_write ft_read
 
 SRCS       = $(addprefix $(SRCS_DIR)/, $(addsuffix .s, $(FILES)))
 OBJS       = $(addprefix $(OBJS_DIR)/, $(addsuffix .o, $(FILES)))

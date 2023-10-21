@@ -30,3 +30,4 @@ done:
 			ret
 error:
 			xor			rax, rax
+			ret
