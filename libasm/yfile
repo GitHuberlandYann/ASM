@@ -1,6 +1,8 @@
+tuto I followed https://cs.lmu.edu/~ray/notes/nasmtutorial/
 
 ; is for comments
-.text  ; tells the assembler to switch to the text segment (where code goes)
+section .text  ; tells the assembler to switch to the text segment (where code goes)
+section .data  ; where const var are stored
 
 rax is a register of 64 bits, the one "returned" at end of function
 eax is part of rax but is 32 bits = int
@@ -67,6 +69,7 @@ mul		REG			; REG = REG * RAX
 div		REG			; REG = REG / RAX
 shr     DEST, VALUE ; DEST = DEST >> VALUE
 shl     DEST, VALUE ; DEST = DEST << VALUE
+neg		REG			; REG = 0 - REG
 
 ; Dereferenced value
 		[REG]		; = *REG
@@ -114,6 +117,7 @@ call	FUNCTION
 
 ; Parameters registers
 RDI RSI RDX RCX R8 R9
+            R10 instead?
 
 ; Register to preserve
 RBP RBX R12 R13 R14 R15	; You **MUST** push/pop them if you use them
