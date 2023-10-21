@@ -10,7 +10,6 @@
 
             global      ft_strlen                      ; make it global so it can be accessed in another file with extern
             global      _Z9ft_strlenPKc
-            ;type       ft_strlen, @function
 
             section     .text
 _Z9ft_strlenPKc:                                       ; name in cpp.o .. to research 
