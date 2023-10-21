@@ -13,7 +13,7 @@ char *ft_strcpy( char *dst, const char *src );
 int ft_strcmp( const char *s1, const char *s2 );
 ssize_t ft_write( int fd, const void *buf, size_t nbyte );
 ssize_t ft_read( int fd, void *buf, size_t nbyte );
-// char *ft_strdup(const char *s1);
+char *ft_strdup( const char *s1 );
 
 int main( void )
 {
@@ -21,6 +21,9 @@ int main( void )
 
 	char *src = SECRET;
 	char *dst = malloc(1000);
+	if (!dst) {
+		return (1);
+	}
 
 	char *cpy = ft_strcpy(dst, src);
 	printf("src %s, dst %s, cpy %s\n", src, dst, cpy);
@@ -41,12 +44,21 @@ int main( void )
 	} else {
 		printf("error on read\n");
 	}
-	olen = ft_read(0, dst, 300);
+	olen = read(0, dst, 300);
 	if (olen >= 0) {
 		dst[olen] = '\0';
 		printf("size %ld, buf is %s\n", olen, dst);;
 	} else {
 		printf("error on read\n");
 	}
+
+	char *dupped = ft_strdup(dst);
+	printf("ft_strdup gave us %s\n", dupped);
+	char *odupped = strdup(dst);
+	printf("strdup gave us %s\n", odupped);
+
+	free(dst);
+	free(dupped);
+	free(odupped);
 	return (0);
 }

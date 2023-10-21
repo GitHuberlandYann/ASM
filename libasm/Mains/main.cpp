@@ -14,7 +14,7 @@ char *ft_strcpy( char *dst, const char *src );
 int ft_strcmp( const char *s1, const char *s2 );
 ssize_t ft_write( int fd, const void *buf, size_t nbyte );
 ssize_t ft_read( int fd, void *buf, size_t nbyte );
-// char *ft_strdup(const char *s1);
+char *ft_strdup( const char *s1 );
 
 int main( void )
 {
@@ -22,7 +22,7 @@ int main( void )
 
 	std::string origin = SECRET;
 	char *src = &origin[0];
-	char *dst = static_cast<char *>(malloc(1000));
+	char *dst = new char[1000];
 
 	char *cpy = ft_strcpy(dst, src);
 	std::cout << "src " << src << ", dst " << dst << ", cpy " << cpy << std::endl;
@@ -43,12 +43,21 @@ int main( void )
 	} else {
 		std::cout << "error on read" << std::endl;
 	}
-	olen = ft_read(0, dst, 300);
+	olen = read(0, dst, 300);
 	if (olen >= 0) {
 		dst[olen] = '\0';
 		std::cout << "size " << olen << ", buf is " << dst << std::endl;
 	} else {
 		std::cout << "error on read" << std::endl;
 	}
+
+	char *dupped = ft_strdup(dst);
+	std::cout << "ft_strdup gave us " <<  dupped << std::endl;
+	char *odupped = strdup(dst);
+	std::cout << "strdup gave us " <<  odupped << std::endl;
+
+	delete [] dst;
+	delete [] dupped;
+	delete [] odupped;
 	return (0);
 }
