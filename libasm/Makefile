@@ -3,7 +3,7 @@ SRCS_DIR   = Sources
 OBJS_DIR   = Objs
 TESTFILE   = Mains/hello
 
-FILES      = ft_strlen
+FILES      = ft_strlen ft_strcpy
 
 SRCS       = $(addprefix $(SRCS_DIR)/, $(addsuffix .s, $(FILES)))
 OBJS       = $(addprefix $(OBJS_DIR)/, $(addsuffix .o, $(FILES)))
@@ -34,7 +34,7 @@ clean:
 	rm -rf $(OBJS_DIR)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) a.out
 
 re: fclean all
 
@@ -43,8 +43,10 @@ test:
 
 debug: all
 	clang++ Mains/main.cpp $(OBJS)
+	@./a.out
 
 cebug: all
 	gcc Mains/main.c $(OBJS)
+	@./a.out
 
 .PHONY: all clean fclean re test debug cebug

@@ -14,12 +14,10 @@
 
             section     .text
 _Z9ft_strlenPKc:                                       ; name in cpp.o .. to research 
-            mov         rax, -1
-            jmp         loop
 ft_strlen:
             mov         rax, -1
 loop:
 	        inc         rax
 	        cmp         byte [rdi + rax], 0
 	        jne         loop
-	        ret
+	        ret; is this usefull?
