@@ -2,7 +2,7 @@
 ; A 64-bit function that copies content of src into dest, and returns a pointer to dest.
 ; The function has signature:
 ;
-;   char *strcpy( char *dest, const char *src );
+;   char *ft_strcpy( char *dest, const char *src );
 ;
 ; Dest is in rdi, src is in rsi.
 ; Return value is in rax.

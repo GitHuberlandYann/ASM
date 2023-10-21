@@ -2,7 +2,7 @@
 ; A 64-bit function that makes a syscall to read.
 ; The function has signature:
 ;
-;   ssize_t read( int fd, const char *buf, size_t nbyte );
+;   ssize_t ft_read( int fd, const char *buf, size_t nbyte );
 ;
 ; Fd is in rdi, buf is in rsi, nbyte is in RDX.
 ; Return value is in rax.

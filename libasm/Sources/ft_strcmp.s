@@ -2,7 +2,7 @@
 ; A 64-bit function that compares content of s1 and s2
 ; The function has signature:
 ;
-;   int strcmp( const char *s1, const char *s2 );
+;   int ft_strcmp( const char *s1, const char *s2 );
 ;
 ; S1 is in rdi, s2 is in rsi.
 ; Return value is in rax.

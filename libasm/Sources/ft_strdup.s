@@ -2,7 +2,7 @@
 ; A 64-bit function that allocs space on memory and fill it with content of string s.
 ; The function has signature:
 ;
-;   char *strdup( const char *s );
+;   char *ft_strdup( const char *s );
 ;
 ; S is in rdi.
 ; Return value is in rax.
@@ -17,20 +17,20 @@
             section     .text
 _Z9ft_strdupPKc:
 ft_strdup:
-			test		rdi, rdi        ; test = 'and' but we don't change value, only set z register
-			je			null
 			push 		rdi
+			test		rdi, rdi        ; test = 'and' but we don't change value, only set z register
+			jz			null
 			call		ft_strlen
 			inc			rax
 			mov			rdi, rax
 			call		malloc WRT ..plt
-			cmp			rax, 0
-			je			null
+			test		rax, rax
+			jz			null
 			mov			rdi, rax
 			pop			rsi
 			call		ft_strcpy
 			ret
-
 null:
+			pop			rax
 			xor			rax, rax
 			ret
