@@ -5,12 +5,12 @@ BONUS_DIR   = Bonus
 OBJS_DIR    = Objs
 TESTFILE    = Mains/hello
 
-FILES       = ft_strlen ft_strcpy ft_strcmp ft_write ft_read ft_strdup
+FILES       = ft_debug ft_strlen ft_strcpy ft_strcmp ft_write ft_read ft_strdup
 
 SRCS        = $(addprefix $(SRCS_DIR)/, $(addsuffix .s, $(FILES)))
 OBJS        = $(addprefix $(OBJS_DIR)/, $(addsuffix .o, $(FILES)))
 
-FILES_BONUS = ft_list_size
+FILES_BONUS = ft_list_add_front ft_list_size
 
 SRCS_BONUS  = $(addprefix $(BONUS_DIR)/, $(addsuffix .s, $(FILES_BONUS)))
 OBJS_BONUS  = $(addprefix $(OBJS_DIR)/, $(addsuffix .o, $(FILES_BONUS)))
@@ -58,10 +58,10 @@ test:
 
 debug: bonus
 	clang++ Mains/main.cpp $(OBJS) $(OBJS_BONUS)
-	@./a.out
+	@./a.out < Makefile
 
 cebug: bonus
 	gcc Mains/main.c $(OBJS) $(OBJS_BONUS)
-	@./a.out
+	@./a.out < Makefile
 
 .PHONY: all bonus clean fclean re test debug cebug

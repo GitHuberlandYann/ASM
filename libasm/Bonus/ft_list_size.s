@@ -2,7 +2,7 @@
 ; A 64-bit function that returns the length of the linked list given as arg.
 ; The function has signature:
 ;
-;   size_t ft_list_size( t_list *lst );
+;   int ft_list_size( t_list *begin_list );
 ;
 ; t_list is defined as follow:
 ;
@@ -11,7 +11,7 @@
 ;		struct s_list *next;
 ;  }				t_list;
 ;
-; S is in rdi.
+; Begin_list is in rdi.
 ; Return value is in rax.
 ; -----------------------------------------------------------------------------
 
@@ -23,9 +23,9 @@ _Z12ft_list_sizeP6s_list:
 ft_list_size:
             xor         rax, rax
 loop:
-	        cmp         rdi, 0
-	        je          done
-			mov			rdi, [rdi + 8]
+	        test        rdi, rdi
+	        jz          done
+			mov			rdi, QWORD [rdi + 8]
 	        inc         rax
 			jmp 		loop
 done:

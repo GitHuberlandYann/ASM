@@ -22,7 +22,16 @@ typedef struct s_list
 	struct s_list *next;
 } 				t_list;
 
-size_t ft_list_size( t_list *lst );
+void ft_list_add_front( t_list **lst, t_list *new0 );
+int ft_list_size( t_list *begin_list );
+void ft_list_push_front( t_list **lst, t_list *new0 )
+{
+	if (!lst || !new0) {
+		return ;
+	}
+	new0->next = *lst;
+	*lst = new0;
+}
 
 int main( void )
 {
@@ -44,19 +53,19 @@ int main( void )
 	ssize_t olen = write(1, WRITEN, strlen(WRITEN));
 	std::cout << "ft len is " << len << " vs " << olen << std::endl;
 
-	len = ft_read(0, dst, 300);
+	len = ft_read(0, dst, 5);
 	if (len >= 0) {
 		dst[len] = '\0';
 		std::cout << "size " << len << ", buf is " << dst << std::endl;
 	} else {
-		std::cout << "error on read" << std::endl;
+		std::cout << "error on read" << len << std::endl;
 	}
-	olen = read(0, dst, 300);
+	olen = read(0, dst, 10);
 	if (olen >= 0) {
 		dst[olen] = '\0';
 		std::cout << "size " << olen << ", buf is " << dst << std::endl;
 	} else {
-		std::cout << "error on read" << std::endl;
+		std::cout << "error on read" << olen << std::endl;
 	}
 
 	char *dupped = ft_strdup(dst);
@@ -68,12 +77,20 @@ int main( void )
 	delete [] dupped;
 	delete [] odupped;
 
-	t_list head, body0, body1, tail;
-	head.next = &body0;
+	t_list *head, rhead, body0, body1, tail;
+	head = &rhead;
+	head->next = &body0;
 	body0.next = &body1;
 	body1.next = &tail;
 	tail.next = NULL;
 
-	std::cout << "ft_list_size is " << ft_list_size(&head) << std::endl;
+	std::cout << "ft_list_size is " << ft_list_size(head) << std::endl;
+	t_list new0, new1;
+	new0.next = NULL;
+	new1.next = NULL;
+	ft_list_add_front(&head, &new0);
+	printf("ft_list_size after add_front is %d\n", ft_list_size(head));
+	ft_list_push_front(&head, &new1);
+	printf("ft_list_size after push_front is %d\n", ft_list_size(head));
 	return (0);
 }

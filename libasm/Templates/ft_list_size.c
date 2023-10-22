@@ -1,18 +1,16 @@
-#include <stddef.h>
-
 typedef struct s_list
 {
 	void *data;
 	struct s_list *next;
 } 				t_list;
 
-size_t ft_list_size( t_list *lst )
+int ft_list_size( t_list *begin_list )
 {
-	size_t res = 0;
+	int res = 0;
 
-	while (lst) {
+	while (begin_list) {
 		++res;
-		lst = lst->next;
+		begin_list = begin_list->next;
 	}
 	return (res);
 }

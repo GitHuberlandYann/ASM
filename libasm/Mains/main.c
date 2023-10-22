@@ -21,7 +21,16 @@ typedef struct s_list
 	struct s_list *next;
 } 				t_list;
 
-size_t ft_list_size( t_list *lst );
+void ft_list_add_front( t_list **lst, t_list *new );
+int ft_list_size( t_list *begin_list );
+void ft_list_push_front( t_list **lst, t_list *new )
+{
+	if (!lst || !new) {
+		return ;
+	}
+	new->next = *lst;
+	*lst = new;
+}
 
 int main( void )
 {
@@ -45,19 +54,19 @@ int main( void )
 	ssize_t olen = write(1, WRITEN, strlen(WRITEN));
 	printf("ft len is %ld vs %ld\n", len, olen);
 
-	len = ft_read(0, dst, 300);
+	len = ft_read(0, dst, 5);
 	if (len >= 0) {
 		dst[len] = '\0';
 		printf("size %ld, buf is %s\n", len, dst);
 	} else {
-		printf("error on read\n");
+		printf("error on read %ld\n", len);
 	}
-	olen = read(0, dst, 300);
+	olen = read(0, dst, 10);
 	if (olen >= 0) {
 		dst[olen] = '\0';
 		printf("size %ld, buf is %s\n", olen, dst);;
 	} else {
-		printf("error on read\n");
+		printf("error on read %ld\n", olen);
 	}
 
 	char *dupped = ft_strdup(dst);
@@ -69,12 +78,20 @@ int main( void )
 	free(dupped);
 	free(odupped);
 
-	t_list head, body0, body1, tail;
-	head.next = &body0;
+	t_list *head, rhead, body0, body1, tail;
+	head = &rhead;
+	head->next = &body0;
 	body0.next = &body1;
 	body1.next = &tail;
 	tail.next = NULL;
 
-	printf("ft_list_size is %ld\n", ft_list_size(&head));
+	printf("ft_list_size is %d\n", ft_list_size(head));
+	t_list new, new1;
+	new.next = NULL;
+	new1.next = NULL;
+	ft_list_add_front(&head, &new);
+	printf("ft_list_size after add_front is %d\n", ft_list_size(head));
+	ft_list_push_front(&head, &new1);
+	printf("ft_list_size after push_front is %d\n", ft_list_size(head));
 	return (0);
 }
