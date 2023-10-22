@@ -1,8 +1,8 @@
 ; -----------------------------------------------------------------------------
-; A 64-bit function that sets new as head of lst.
+; A 64-bit function that creates new t_list* and sets it as head of lst.
 ; The function has signature:
 ;
-;   void ft_list_push_front( t_list **lst, t_list *new );
+;   void ft_list_push_front( t_list **begin_list, void *data );
 ;
 ; t_list is defined as follow:
 ;
@@ -11,22 +11,29 @@
 ;		struct s_list *next;
 ;  }				t_list;
 ;
-; Lst is in rdi, new in rsi.
+; Begin_list is in rdi, data in rsi.
 ; There is no return value.
 ; -----------------------------------------------------------------------------
 
             global      ft_list_push_front
-            global      _Z12ft_list_push_frontP6s_list
+            global      _Z18ft_list_push_frontPP6s_listPv
+			extern		malloc
 
             section     .text
-_Z12ft_list_push_frontP6s_list:
+_Z18ft_list_push_frontPP6s_listPv:
 ft_list_push_front:
-			cmp			QWORD [rdi], 0
+			cmp 		rdi, 0
 	        je          done
-			cmp			QWORD [rsi], 0
+			push		rdi
+			mov			rdi, 16
+			call		malloc WRT ..plt
+			pop			rdi
+			cmp 		rax, 0
 			je			done
-			mov			rax, QWORD [rdi]
-			mov			QWORD [rsi + 8], rax
-			mov			QWORD [rdi], rsi
+			mov			rdx, QWORD [rdi]
+			mov			QWORD [rax], rsi
+			mov			QWORD [rax + 8], rdx
+			mov			QWORD [rdi], rax
+
 done:
 			ret

@@ -10,7 +10,7 @@ FILES       = ft_debug ft_strlen ft_strcpy ft_strcmp ft_write ft_read ft_strdup
 SRCS        = $(addprefix $(SRCS_DIR)/, $(addsuffix .s, $(FILES)))
 OBJS        = $(addprefix $(OBJS_DIR)/, $(addsuffix .o, $(FILES)))
 
-FILES_BONUS = ft_list_add_front ft_list_size
+FILES_BONUS = ft_list_add_front ft_list_push_front ft_list_size
 
 SRCS_BONUS  = $(addprefix $(BONUS_DIR)/, $(addsuffix .s, $(FILES_BONUS)))
 OBJS_BONUS  = $(addprefix $(OBJS_DIR)/, $(addsuffix .o, $(FILES_BONUS)))

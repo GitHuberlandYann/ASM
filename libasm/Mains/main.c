@@ -23,14 +23,7 @@ typedef struct s_list
 
 void ft_list_add_front( t_list **lst, t_list *new );
 int ft_list_size( t_list *begin_list );
-void ft_list_push_front( t_list **lst, t_list *new )
-{
-	if (!lst || !new) {
-		return ;
-	}
-	new->next = *lst;
-	*lst = new;
-}
+void ft_list_push_front( t_list **begin_list, void *data );
 
 int main( void )
 {

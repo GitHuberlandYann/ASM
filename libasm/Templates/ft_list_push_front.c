@@ -6,13 +6,18 @@ typedef struct s_list
 	struct s_list *next;
 } 				t_list;
 
-void ft_list_push_front( t_list **lst, t_list *new )
+void ft_list_push_front( t_list **begin_list, void *data )
 {
-	if (!lst || !new) {
+	if (!begin_list) {
 		return ;
 	}
-	new->next = *lst;
-	*lst = new;
+	t_list *new = malloc(sizeof(*new));
+	if (!new) {
+		return ;
+	}
+	new->data = data;
+	new->next = *begin_list;
+	*begin_list = new;
 }
 
 int main( void )
