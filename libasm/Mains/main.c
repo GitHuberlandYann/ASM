@@ -38,6 +38,7 @@ void ft_list_sort( t_list *begin_list, int (*cmp)() );
 // 		tmp = tmp->next;
 // 	}
 // }
+void ft_puthexnbr( long nbr );
 
 int main( void )
 {
@@ -48,7 +49,6 @@ int main( void )
 	if (!dst) {
 		return (1);
 	}
-
 	char *cpy = ft_strcpy(dst, src);
 	printf("src %s, dst %s, cpy %s\n", src, dst, cpy);
 	cpy = strcpy(dst, TOP);
@@ -113,6 +113,11 @@ int main( void )
 		tmp = tmp->next;
 	}
 	printf("sorting ... please wait\n");
+	ft_puthexnbr((long)head);
+	ft_puthexnbr((long)head->data);
+	ft_puthexnbr((long)head->next);
+	ft_puthexnbr((long)head->next->data);
+	printf("addr head is %p, first member is %p\n", (void*)&rhead, (void*)&body0);
 	ft_list_sort(head, strcmp);
 	tmp = head;
 	index = 0;

@@ -22,10 +22,10 @@ ft_strlen:
 loop:
 	        inc         rax
 			; call		ft_debug
-			push 		rdi
-			mov			rdi, rax
-			call		ft_puthexnbr
-			pop			rdi
+			; push 		rdi
+			; mov			rdi, rax
+			; call		ft_puthexnbr
+			; pop			rdi
 	        cmp         byte [rdi + rax], 0
 	        jne         loop
 	        ret

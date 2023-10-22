@@ -13,10 +13,17 @@
 
             section     .text
 ft_puthexnbr:
+			push	rbp
+			mov		rbp, rsp
+			sub		rsp, 8
+			mov		rsi, rbp
+			sub		rsi, 8					; set rsi as value on top of stack
 			push	rdi
 			push	rsi
 			push	rdx
 			push	rax
+			push	r10
+			push	r11
 			cmp		rdi, 0
 			jge		prefix
 			mov		rax, 45					; '-'
@@ -42,7 +49,7 @@ loop:
 ft_puthex:
 			mov		rax, rdi
 			add		rax, 48					; rax += '0'
-			cmp		rax, 57
+			cmp		rax, 57					; '9'
 			jg		offset
 			call	ft_putchar
 			ret
@@ -51,7 +58,9 @@ offset:
 			call	ft_putchar
 			ret
 ft_putchar:
+			; call	ft_debug
 			mov		QWORD [rsi], rax
+			; call	ft_debug
 			mov		rax, 1					; write
 			push 	rdi
 			mov		rdi, 1					; fd = 1
@@ -60,8 +69,12 @@ ft_putchar:
 			pop		rdi
 			ret
 done:
+			pop		r11
+			pop		r10
 			pop		rax
 			pop		rdx
 			pop		rsi
 			pop		rdi
+			mov		rsp, rbp				; restore stack frame
+			pop		rbp
 			ret

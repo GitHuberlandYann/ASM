@@ -18,6 +18,7 @@
             global      ft_list_sort
             ; global      _Z18ft_list_sortPP6s_listPv
 			extern 		ft_debug
+			extern		ft_puthexnbr
 
             section     .text
 ; _Z18ft_list_sortPP6s_listPv:
@@ -36,6 +37,18 @@ loop:
 			cmp			r11, 0
 			je			done
 			mov			rdi, QWORD [r10]		; rdi = tmp.data
+	
+			push		rdi
+			mov			rdi, r11
+			call		ft_puthexnbr
+			mov			rdi, r10
+			call		ft_puthexnbr
+			add			rdi, 8
+			call		ft_puthexnbr
+			mov			rdi, QWORD [rdi]
+			call		ft_puthexnbr
+			pop			rdi
+	
 			call		ft_debug
 			mov			rsi, QWORD [r11]		; rsi = tmp.next.data
 			call		ft_debug

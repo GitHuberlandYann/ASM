@@ -16,6 +16,8 @@ ft_debug:
 			push	rsi
 			push	rdx
 			push	rax
+			push	r10
+			push	r11
 
 			mov		rax, 1
 			mov		rdi, 1
@@ -23,6 +25,8 @@ ft_debug:
 			mov		rdx, length
 			syscall
 
+			pop		r11
+			pop		r10
 			pop		rax
 			pop		rdx
 			pop		rsi
