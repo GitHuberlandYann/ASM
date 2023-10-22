@@ -16,11 +16,13 @@ ft_debug:
 			push	rsi
 			push	rdx
 			push	rax
+
 			mov		rax, 1
 			mov		rdi, 1
             mov 	rsi, message
 			mov		rdx, length
 			syscall
+
 			pop		rax
 			pop		rdx
 			pop		rsi

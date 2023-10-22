@@ -22,6 +22,7 @@
             section     .text
 _Z18ft_list_push_frontPP6s_listPv:
 ft_list_push_front:
+			push 		rsi					; seems like malloc modifies rsi
 			cmp 		rdi, 0
 	        je          done
 			push		rdi
@@ -31,9 +32,9 @@ ft_list_push_front:
 			cmp 		rax, 0
 			je			done
 			mov			rdx, QWORD [rdi]
+			pop			rsi
 			mov			QWORD [rax], rsi
 			mov			QWORD [rax + 8], rdx
 			mov			QWORD [rdi], rax
-
 done:
 			ret

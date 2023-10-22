@@ -24,10 +24,24 @@ typedef struct s_list
 void ft_list_add_front( t_list **lst, t_list *new );
 int ft_list_size( t_list *begin_list );
 void ft_list_push_front( t_list **begin_list, void *data );
+void ft_list_sort( t_list *begin_list, int (*cmp)() );
+// {
+// 	t_list *tmp = begin_list;
+
+// 	while (tmp->next) {
+// 		if (cmp(tmp->data, tmp->next->data) > 0) {
+// 			void *swap = tmp->data;
+// 			tmp->data = tmp->next->data;
+// 			tmp->next->data = swap;
+// 			return (ft_list_sort(begin_list, cmp));
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// }
 
 int main( void )
 {
-	printf("strlen('test') is %ld\n", ft_strlen("test"));
+	printf("\nstrlen('test') is %ld\n", ft_strlen("test"));
 
 	char *src = SECRET;
 	char *dst = malloc(1000);
@@ -65,13 +79,17 @@ int main( void )
 	char *dupped = ft_strdup(dst);
 	printf("ft_strdup gave us %s\n", dupped);
 	char *odupped = strdup(dst);
-	printf("strdup gave us %s\n", odupped);
+	printf("strdup gave us %s\n\n", odupped);
 
 	free(dst);
 	free(dupped);
 	free(odupped);
 
 	t_list *head, rhead, body0, body1, tail;
+	rhead.data = "bonjour";
+	body0.data = "Bonjour";
+	body1.data = "AU revoir onjour";
+	tail.data = "au bonjour";
 	head = &rhead;
 	head->next = &body0;
 	body0.next = &body1;
@@ -79,12 +97,30 @@ int main( void )
 	tail.next = NULL;
 
 	printf("ft_list_size is %d\n", ft_list_size(head));
-	t_list new, new1;
+	t_list new;
+	new.data = "this was new";
 	new.next = NULL;
-	new1.next = NULL;
+	char *data = "data";
 	ft_list_add_front(&head, &new);
 	printf("ft_list_size after add_front is %d\n", ft_list_size(head));
-	ft_list_push_front(&head, &new1);
+	ft_list_push_front(&head, data);
 	printf("ft_list_size after push_front is %d\n", ft_list_size(head));
+	t_list *tmp = head;
+	int index = 0;
+	while (tmp) {
+		printf("at index %d: %s\n", index, (char *)(tmp->data));
+		++index;
+		tmp = tmp->next;
+	}
+	printf("sorting ... please wait\n");
+	ft_list_sort(head, strcmp);
+	tmp = head;
+	index = 0;
+	while (tmp) {
+		printf("at index %d: %s\n", index, (char *)(tmp->data));
+		++index;
+		tmp = tmp->next;
+	}
+	free(head);
 	return (0);
 }
