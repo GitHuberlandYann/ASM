@@ -87,8 +87,8 @@ int main( void )
 
 	t_list *head, rhead, body0, body1, tail;
 	rhead.data = "bonjour";
-	body0.data = "Bonjour";
-	body1.data = "AU revoir onjour";
+	body0.data = "au revoir";
+	body1.data = "Bonjour";
 	tail.data = "au bonjour";
 	head = &rhead;
 	head->next = &body0;
@@ -100,7 +100,7 @@ int main( void )
 	t_list new;
 	new.data = "this was new";
 	new.next = NULL;
-	char *data = "data";
+	void *data = "data";
 	ft_list_add_front(&head, &new);
 	printf("ft_list_size after add_front is %d\n", ft_list_size(head));
 	ft_list_push_front(&head, data);
@@ -113,12 +113,7 @@ int main( void )
 		tmp = tmp->next;
 	}
 	printf("sorting ... please wait\n");
-	ft_puthexnbr((long)head);
-	ft_puthexnbr((long)head->data);
-	ft_puthexnbr((long)head->next);
-	ft_puthexnbr((long)head->next->data);
-	printf("addr head is %p, first member is %p\n", (void*)&rhead, (void*)&body0);
-	ft_list_sort(head, strcmp);
+	ft_list_sort(head, strcmp);//strcmp);
 	tmp = head;
 	index = 0;
 	while (tmp) {

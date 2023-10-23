@@ -25,6 +25,7 @@ typedef struct s_list
 void ft_list_add_front( t_list **lst, t_list *new0 );
 void ft_list_push_front( t_list **begin_list, void *data );
 int ft_list_size( t_list *begin_list );
+void ft_list_sort( t_list *begin_list, int (*cmp)(const char*, const char*) );
 
 int main( void )
 {
@@ -71,6 +72,10 @@ int main( void )
 	delete [] odupped;
 
 	t_list *head, rhead, body0, body1, tail;
+	rhead.data = (void*)"bonjour";
+	body0.data = (void*)"au revoir";
+	body1.data = (void*)"Bonjour";
+	tail.data = (void*)"au bonjour";
 	head = &rhead;
 	head->next = &body0;
 	body0.next = &body1;
@@ -78,12 +83,30 @@ int main( void )
 	tail.next = NULL;
 
 	std::cout << "ft_list_size is " << ft_list_size(head) << std::endl;
-	t_list new0, new1;
+	t_list new0;
+	new0.data = (void*)"this was new";
 	new0.next = NULL;
-	new1.next = NULL;
+	void *data = (void*)"data";
 	ft_list_add_front(&head, &new0);
 	printf("ft_list_size after add_front is %d\n", ft_list_size(head));
-	ft_list_push_front(&head, &new1);
+	ft_list_push_front(&head, data);
 	printf("ft_list_size after push_front is %d\n", ft_list_size(head));
+	t_list *tmp = head;
+	int index = 0;
+	while (tmp) {
+		printf("at index %d: %s\n", index, (char *)(tmp->data));
+		++index;
+		tmp = tmp->next;
+	}
+	printf("sorting ... please wait\n");
+	ft_list_sort(head, strcmp);//strcmp);
+	tmp = head;
+	index = 0;
+	while (tmp) {
+		printf("at index %d: %s\n", index, (char *)(tmp->data));
+		++index;
+		tmp = tmp->next;
+	}
+	delete head;
 	return (0);
 }

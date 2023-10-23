@@ -16,8 +16,8 @@ ft_puthexnbr:
 			push	rbp
 			mov		rbp, rsp
 			sub		rsp, 8
-			mov		rsi, rbp
-			sub		rsi, 8					; set rsi as value on top of stack
+			mov		rsi, qword [rsp]
+			; sub		rsi, 8					; set rsi as value on top of stack
 			push	rdi
 			push	rsi
 			push	rdx

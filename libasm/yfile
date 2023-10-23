@@ -130,3 +130,19 @@ RAX
 mov		rax, CODE	; Then RDI, RSI etc.. for params
 					; Add 0x2000000 to the syscall number, see table below
 syscall
+
+
+gdb ./a.out <- after compile with -g
+
+r -> run/restart
+starti -> run program and stop on first asm instruction
+ni -> next instruction
+c -> continue
+b symbol -> put breakpoint
+layout asm -> display asm
+disas symbol -> display asm of selected function
+p var -> in c, print content of variable
+p $reg -> print content of register
+p (cast) $reg -> print content of register, but casted
+r into segfault -> b *addr of segfault
+x/s $reg -> equivalent to p (char *) $reg

@@ -67,11 +67,11 @@ test:
 	$(ASM) $(ASMFLAGS) $(TESTFILE).s && gcc $(TESTFILE).o && rm $(TESTFILE).o && ./a.out
 
 debug: bonus
-	clang++ Mains/main.cpp $(NAME_BONUS)
+	clang++ -g Mains/main.cpp $(NAME_BONUS)
 	@./a.out < Makefile
 
 cebug: bonus
-	gcc Mains/main.c $(NAME_BONUS)
+	gcc -g Mains/main.c $(NAME_BONUS)
 	@./a.out < Makefile
 
 .PHONY: all bonus clean fclean re test debug cebug
