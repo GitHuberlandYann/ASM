@@ -16,12 +16,17 @@
 ; -----------------------------------------------------------------------------
 
             global      ft_list_sort
+            global      _ft_list_sort
             ; global      _Z18ft_list_sortPP6s_listPv
+            ; global      __Z18ft_list_sortPP6s_listPv
+
 			extern 		ft_debug
 			extern		ft_puthexnbr
 
             section     .text
+; __Z18ft_list_sortPP6s_listPv:
 ; _Z18ft_list_sortPP6s_listPv:
+_ft_list_sort:
 ft_list_sort:
 			push		rdi
 			cmp			rdi, 0

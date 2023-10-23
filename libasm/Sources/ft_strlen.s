@@ -8,13 +8,18 @@
 ; Return value is in rax.
 ; -----------------------------------------------------------------------------
 
-            global      ft_strlen                      ; make it global so it can be accessed in another file with extern
-            global      _Z9ft_strlenPKc
+            global      ft_strlen                      	; make it global so it can be accessed in another file with extern
+            global      _ft_strlen                     	; for macos
+            global      _Z9ft_strlenPKc					; for cpp
+            global      __Z9ft_strlenPKc				; for macos cpp
+
 			extern		ft_debug
 			extern		ft_puthexnbr
 
             section     .text
-_Z9ft_strlenPKc:                                       ; name in cpp.o .. to research 
+__Z9ft_strlenPKc:
+_Z9ft_strlenPKc:
+_ft_strlen:
 ft_strlen:
             test        rdi, rdi
             jz          null

@@ -9,10 +9,14 @@
 ; -----------------------------------------------------------------------------
 
             global      ft_strcmp
+            global      _ft_strcmp
             global      _Z9ft_strcmpPKcS0_
+            global      __Z9ft_strcmpPKcS0_
 
             section     .text
+__Z9ft_strcmpPKcS0_:
 _Z9ft_strcmpPKcS0_:
+_ft_strcmp:
 ft_strcmp:
 			cmp 		rdi, 0       ;strcmp from man segfaults .. tbd
 			je			error

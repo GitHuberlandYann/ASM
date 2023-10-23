@@ -9,11 +9,17 @@
 ; -----------------------------------------------------------------------------
 
             global      ft_write
+            global      _ft_write
 			global      _Z8ft_writeiPKvm
+			global      __Z8ft_writeiPKvm
+
 			extern		__errno_location
+			extern		___error
 
             section     .text
+__Z8ft_writeiPKvm:
 _Z8ft_writeiPKvm:
+_ft_write:
 ft_write:
 			mov 		rax, 1		; system call 1 is write
 			syscall  				; no need to move rdi rsi rdx because they are at the right place
@@ -23,7 +29,8 @@ ft_write:
 error:
 			neg         rax
 			mov			rdx, rax
-			call		__errno_location WRT ..plt
+			;REPLACE call		__errno_location WRT ..plt
+			call		___error
 			mov 		[rax], rdx
 			mov 		rax, -1
 			ret

@@ -9,9 +9,12 @@
 ; -----------------------------------------------------------------------------
 
             global      ft_puthexnbr
+            global      _ft_puthexnbr
+
 			extern		ft_debug
 
             section     .text
+_ft_puthexnbr:
 ft_puthexnbr:
 			push	rbp
 			mov		rbp, rsp

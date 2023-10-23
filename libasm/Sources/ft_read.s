@@ -9,11 +9,17 @@
 ; -----------------------------------------------------------------------------
 
             global      ft_read
+            global      _ft_read
 			global      _Z7ft_readiPvm
+			global      __Z7ft_readiPvm
+
 			extern		__errno_location
+			extern		___error
 
             section     .text
+__Z7ft_readiPvm:
 _Z7ft_readiPvm:
+_ft_read:
 ft_read:
 			xor 		rax, rax	; system call 0 is read
 			syscall  				; no need to move rdi rsi rdx because they are at the right place
@@ -23,7 +29,8 @@ ft_read:
 error:
 			neg         rax
 			mov			rdx, rax
-			call		__errno_location WRT ..plt
+			;REPLACE call		__errno_location WRT ..plt
+			call		___error
 			mov 		[rax], rdx
 			mov 		rax, -1
 			ret

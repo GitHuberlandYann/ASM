@@ -9,10 +9,14 @@
 ; -----------------------------------------------------------------------------
 
             global      ft_strcpy
+            global      _ft_strcpy
             global      _Z9ft_strcpyPcPKc
+            global      __Z9ft_strcpyPcPKc
 
             section     .text
+__Z9ft_strcpyPcPKc:
 _Z9ft_strcpyPcPKc:
+_ft_strcpy:
 ft_strcpy:
 			cmp 		rdi, 0       ;strcpy from man segfaults .. tbd
 			je			error

@@ -16,18 +16,25 @@
 ; -----------------------------------------------------------------------------
 
             global      ft_list_push_front
+            global      _ft_list_push_front
             global      _Z18ft_list_push_frontPP6s_listPv
+            global      __Z18ft_list_push_frontPP6s_listPv
+
 			extern		malloc
+			extern		_malloc
 
             section     .text
+__Z18ft_list_push_frontPP6s_listPv:
 _Z18ft_list_push_frontPP6s_listPv:
+_ft_list_push_front:
 ft_list_push_front:
 			push 		rsi					; seems like malloc modifies rsi
 			cmp 		rdi, 0
 	        je          done
 			push		rdi
 			mov			rdi, 16
-			call		malloc WRT ..plt
+			;REPLACE call		malloc WRT ..plt
+			call		_malloc
 			pop			rdi
 			cmp 		rax, 0
 			je			done

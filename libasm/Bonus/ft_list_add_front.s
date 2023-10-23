@@ -16,10 +16,14 @@
 ; -----------------------------------------------------------------------------
 
             global      ft_list_add_front
+            global      _ft_list_add_front
             global      _Z17ft_list_add_frontPP6s_listS0_
+            global      __Z17ft_list_add_frontPP6s_listS0_
 
             section     .text
+__Z17ft_list_add_frontPP6s_listS0_:
 _Z17ft_list_add_frontPP6s_listS0_:
+_ft_list_add_front:
 ft_list_add_front:
 			cmp			rdi, 0
 	        je          done
