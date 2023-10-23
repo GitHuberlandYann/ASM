@@ -18,9 +18,9 @@ ft_read:
 			xor 		rax, rax	; system call 0 is read
 			syscall  				; no need to move rdi rsi rdx because they are at the right place
 			cmp			rax, 0
-			jl          error
+			jl          .error
 			ret						; rax is set by syscall
-error:
+.error:
 			neg         rax
 			mov			rdx, rax
 			call		__errno_location WRT ..plt

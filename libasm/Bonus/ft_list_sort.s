@@ -17,23 +17,21 @@
 
             global      ft_list_sort
             global      _Z12ft_list_sortP6s_listPFiPKcS2_E
-			extern 		ft_debug
-			extern		ft_puthexnbr
 
             section     .text
 _Z12ft_list_sortP6s_listPFiPKcS2_E:
 ft_list_sort:
 			push		rdi
 			cmp			rdi, 0
-			je			done
+			je			.done
 			cmp			rsi, 0
-			je			done
+			je			.done
 			mov			rdx, rsi				; rdx = cmp
 			mov			r10, rdi        		; r10 = tmp = begin_list
-loop:
+.loop:
 			mov			r11, QWORD [r10 + 8]  	; r11 = tmp->next
 			cmp			r11, 0
-			je			done
+			je			.done
 			mov			rdi, QWORD [r10]		; rdi = tmp->data
 			mov			rsi, QWORD [r11]		; rsi = tmp->next->data
 			push 		r10
@@ -44,10 +42,10 @@ loop:
 			pop			r11
 			pop			r10
 			cmp			eax, 0
-			jg			ft_swap
+			jg			.ft_swap
 			mov			r10, r11				; r10 = tmp->next
-			jmp 		loop
-ft_swap:
+			jmp 		.loop
+.ft_swap:
 			mov			rax, QWORD [r10]
 			mov			rcx, QWORD [r11]
 			mov			QWORD [r10], rcx
@@ -56,6 +54,6 @@ ft_swap:
 			mov			rsi, rdx
 			call		ft_list_sort
 			ret
-done:
+.done:
 			pop			rdi
 			ret

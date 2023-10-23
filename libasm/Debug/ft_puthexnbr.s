@@ -25,39 +25,39 @@ ft_puthexnbr:
 			push	r10
 			push	r11
 			cmp		rdi, 0
-			jge		prefix
+			jge		.prefix
 			mov		rax, 45					; '-'
-			call	ft_putchar
+			call	.ft_putchar
 			neg		rdi
-prefix:
+.prefix:
 			mov		rax, 48					;'0'
-			call	ft_putchar
+			call	.ft_putchar
 			mov		rax, 120				;'x'
-			call	ft_putchar
-			call	loop
+			call	.ft_putchar
+			call	.loop
 			mov 	rax, 10					; '\n'
-			call	ft_putchar
-			jmp 	done
-loop:
+			call	.ft_putchar
+			jmp 	.done
+.loop:
 			cmp 	rdi, 0x10
-			jl		ft_puthex
+			jl		.ft_puthex
 			push    rdi
 			shr		rdi, 4
-			call	loop
+			call	.loop
 			pop		rdi
 			and		rdi, 0xF
-ft_puthex:
+.ft_puthex:
 			mov		rax, rdi
 			add		rax, 48					; rax += '0'
 			cmp		rax, 57					; '9'
-			jg		offset
-			call	ft_putchar
+			jg		.offset
+			call	.ft_putchar
 			ret
-offset:
+.offset:
 			add		rax, 7
-			call	ft_putchar
+			call	.ft_putchar
 			ret
-ft_putchar:
+.ft_putchar:
 			; call	ft_debug
 			mov		QWORD [rsi], rax
 			; call	ft_debug
@@ -68,7 +68,7 @@ ft_putchar:
 			syscall
 			pop		rdi
 			ret
-done:
+.done:
 			pop		r11
 			pop		r10
 			pop		rax

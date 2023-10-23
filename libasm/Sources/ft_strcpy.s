@@ -15,19 +15,19 @@
 _Z9ft_strcpyPcPKc:
 ft_strcpy:
 			cmp 		rdi, 0       ;strcpy from man segfaults .. tbd
-			je			error
+			je			.error
 			cmp 		rsi, 0
-			je			error
+			je			.error
             mov         rcx, -1
-loop:
+.loop:
 	        inc         rcx			 ; using rax here doesn't work because we use al(=same register) below
 			mov 		al, byte [rsi + rcx]
 			mov 		byte [rdi + rcx], al
 	        cmp         byte al, 0
-	        jne         loop
-done:
+	        jne         .loop
+.done:
 			mov			rax, rdi
 			ret
-error:
+.error:
 			xor			rax, rax
 			ret

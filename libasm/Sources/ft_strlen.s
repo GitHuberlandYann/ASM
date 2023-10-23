@@ -10,25 +10,18 @@
 
             global      ft_strlen                      ; make it global so it can be accessed in another file with extern
             global      _Z9ft_strlenPKc
-			extern		ft_debug
-			extern		ft_puthexnbr
 
             section     .text
 _Z9ft_strlenPKc:                                       ; name in cpp.o .. to research 
 ft_strlen:
             test        rdi, rdi
-            jz          null
+            jz          .null
             mov         rax, -1
-loop:
+.loop:
 	        inc         rax
-			; call		ft_debug
-			; push 		rdi
-			; mov			rdi, rax
-			; call		ft_puthexnbr
-			; pop			rdi
 	        cmp         byte [rdi + rax], 0
-	        jne         loop
+	        jne         .loop
 	        ret
-null:
+.null:
             xor         rax, rax
             ret

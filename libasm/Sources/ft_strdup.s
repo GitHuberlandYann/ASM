@@ -10,6 +10,7 @@
 
             global      ft_strdup
 			global      _Z9ft_strdupPKc
+
 			extern		ft_strlen
 			extern 		malloc
 			extern		ft_strcpy
@@ -19,18 +20,18 @@ _Z9ft_strdupPKc:
 ft_strdup:
 			push 		rdi
 			test		rdi, rdi        ; test = 'and' but we don't change value, only set z register
-			jz			null
+			jz			.null
 			call		ft_strlen
 			inc			rax
 			mov			rdi, rax
 			call		malloc WRT ..plt
 			test		rax, rax
-			jz			null
+			jz			.null
 			mov			rdi, rax
 			pop			rsi
 			call		ft_strcpy
 			ret
-null:
+.null:
 			pop			rax
 			xor			rax, rax
 			ret

@@ -22,11 +22,11 @@
 _Z12ft_list_sizeP6s_list:
 ft_list_size:
             xor         rax, rax
-loop:
+.loop:
 	        test        rdi, rdi
-	        jz          done
+	        jz          .done
 			mov			rdi, QWORD [rdi + 8]
 	        inc         rax
-			jmp 		loop
-done:
+			jmp 		.loop
+.done:
 			ret

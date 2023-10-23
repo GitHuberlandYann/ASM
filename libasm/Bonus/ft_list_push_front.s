@@ -24,17 +24,17 @@ _Z18ft_list_push_frontPP6s_listPv:
 ft_list_push_front:
 			push 		rsi					; seems like malloc modifies rsi
 			cmp 		rdi, 0
-	        je          done
+	        je          .done
 			push		rdi
 			mov			rdi, 16
 			call		malloc WRT ..plt
 			pop			rdi
 			cmp 		rax, 0
-			je			done
+			je			.done
 			mov			rdx, QWORD [rdi]
 			pop			rsi
 			mov			QWORD [rax], rsi
 			mov			QWORD [rax + 8], rdx
 			mov			QWORD [rdi], rax
-done:
+.done:
 			ret
