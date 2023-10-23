@@ -17,7 +17,7 @@ FILES_DBG   = ft_puthexnbr ft_debug
 SRCS_DBG    = $(addprefix $(DBG_DIR)/, $(addsuffix .s, $(FILES_DBG)))
 OBJS_DBG    = $(addprefix $(OBJS_DIR)/, $(addsuffix .o, $(FILES_DBG)))
 
-FILES_BONUS = ft_list_add_front ft_list_push_front ft_list_size ft_list_sort
+FILES_BONUS = ft_atoi_base ft_list_add_front ft_list_push_front ft_list_size ft_list_sort
 
 SRCS_BONUS  = $(addprefix $(BONUS_DIR)/, $(addsuffix .s, $(FILES_BONUS)))
 OBJS_BONUS  = $(addprefix $(OBJS_DIR)/, $(addsuffix .o, $(FILES_BONUS)))

@@ -21,24 +21,11 @@ typedef struct s_list
 	struct s_list *next;
 } 				t_list;
 
+int ft_atoi_base( char *str, char *base );
 void ft_list_add_front( t_list **lst, t_list *new );
 int ft_list_size( t_list *begin_list );
 void ft_list_push_front( t_list **begin_list, void *data );
 void ft_list_sort( t_list *begin_list, int (*cmp)() );
-// {
-// 	t_list *tmp = begin_list;
-
-// 	while (tmp->next) {
-// 		if (cmp(tmp->data, tmp->next->data) > 0) {
-// 			void *swap = tmp->data;
-// 			tmp->data = tmp->next->data;
-// 			tmp->next->data = swap;
-// 			return (ft_list_sort(begin_list, cmp));
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// }
-void ft_puthexnbr( long nbr );
 
 int main( void )
 {
@@ -122,5 +109,6 @@ int main( void )
 		tmp = tmp->next;
 	}
 	free(head);
+	printf("atoi_base return: %d\n", ft_atoi_base("   \t\t--++++544q45600", "45"));
 	return (0);
 }

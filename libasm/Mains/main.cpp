@@ -22,6 +22,7 @@ typedef struct s_list
 	struct s_list *next;
 } 				t_list;
 
+int ft_atoi_base( char *str, char *base );
 void ft_list_add_front( t_list **lst, t_list *new0 );
 void ft_list_push_front( t_list **begin_list, void *data );
 int ft_list_size( t_list *begin_list );
@@ -108,5 +109,6 @@ int main( void )
 		tmp = tmp->next;
 	}
 	delete head;
+	printf("atoi_base return: %d\n", ft_atoi_base((char*)(void*)"   \t\t--++++544q45600", (char*)(void*)"45"));
 	return (0);
 }

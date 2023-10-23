@@ -9,24 +9,22 @@
 ; -----------------------------------------------------------------------------
 
             global      ft_atoi_base
-            ; global      _Z9ft_atoi_basePKc
+            global      _Z12ft_atoi_basePcS_
 
 			extern		ft_strlen
 
             section     .text
-; _Z9ft_atoi_basePKc:
+_Z12ft_atoi_basePcS_:
 ft_atoi_base:
             cmp         rdi, 0
-            je          .null
+            je          zero
 			cmp 		rsi, 0
-			je			.null
+			je			zero
 			push		rdi
-			push		rsi
-			call		.valid_base
-			pop			rsi
+			call		.valid_base 			; after call, strlen(base) is in r10
 			pop			rdi
-			cmp			rax, 0					; 0 if problem, ft_strlen(base) otherwise
-			je			.null
+			cmp			eax, 0
+			je			zero
             mov         rcx, -1
 			push		rdi
 			push		rsi
@@ -35,68 +33,85 @@ ft_atoi_base:
 			inc			rcx
 			mov			dil, byte [rsi + rcx]
 			call		ft_isspace
-			cmp			rax, 1
+			cmp			eax, 1
 			je			.skip_space
-			mov			r11, 1
-			mov			dil, byte [rsi + rcx]
-			mov			r12, 0
-.add_value:
-			pop			rsi
-			pop			rdi
-
+			mov			r11, 1					; sign = 1
 .skip_signs:
 			mov			dil, byte [rsi + rcx]
 			call		ft_issign
-			cmp			rax, 0
+			cmp			eax, 1
 			je			.handle_sign
-.handle_sign:
-			cmp			dil, 45	; '-'
-			cmove		r11, -r11
+			mov			r12, 0					; res = 0
+			pop			rsi						; base
+			pop			r8						; str
+.actual_loop:
+			call		ft_strchr_zero
+			cmp			eax, -1
+			jne			.add_value
+			mov			eax, r12d
+			imul		eax, r11d
+			ret
+.add_value:
+			; res = len * res + index
+			imul		r12, r10
+			add			r12d, eax
 			inc			rcx
+			mov			dil, byte [r8 + rcx]
+			jmp			.actual_loop
+.handle_sign:
+			inc			rcx
+			cmp			dil, 45	; '-'
+			jne			.skip_signs
+.neg_sign:
+			neg			r11
 			jmp			.skip_signs
 .valid_base:
 			mov			rdi, rsi
 			call		ft_strlen
 			cmp			rax, 2
-			jl			.null
-			
+			jl			zero
+			mov			r10, rax				; = size base
 			mov			rcx, -1
-			mov			r10, rax				; might want to return rax intact from here. (= size)
 			call		.valid_base_loop
-			cmp			rax, 0
-			je			.null
-			mov			rax, r10
-			ret
+			ret									; if rax is 0, return 0 else return rax, so no jmp/mov needed
 .valid_base_loop:
 			inc			rcx
 			mov			dil, byte [rsi + rcx]
 			cmp			dil, 0					; dil is rdi on 1 byte
-			je			.one
+			je			one
 			call		ft_isspace
-			cmp			rax, 0
-			je			.null
+			cmp			eax, 1
+			je			zero
 			call		ft_issign
-			cmp			rax, 0
-			je			.null
+			cmp			eax, 1
+			je			zero
 			call		ft_strchr
-			cmp 		rax, 0
-			je			.null
+			cmp 		eax, -1
+			jne			zero
 			jmp			.valid_base_loop
+
+; ---------------------------------
 ft_isspace:
 			cmp			dil, 32	; ' '
-			je			.one
+			je			one
 			cmp			dil, 9		; '\t'
-			jl			.null
+			jl			zero
 			cmp			dil, 13	; '\r'
-			jg			.null
-			jmp			.one
+			jg			zero
+			jmp			one
 ft_issign:
 			cmp			dil, 43	; '+'
-			je			.null
+			je			one
 			cmp			dil, 45	; '-'
-			je			.null
-			jmp			.one
-ft_strchr: ; int ft_strchr(char c, char *s) with index in rcx. return 0 if not found, index if found
+			je			one
+			jmp			zero
+ft_strchr_zero: ; same as strchr, but starts from 0
+			push		rcx
+			mov			rcx, -1
+			call		ft_strchr
+			pop			rcx
+			ret
+ft_strchr: ; int ft_strchr_zero(char c, char *s). return 0 if not found, index if found
 			push		rcx
 			call		.strchr_loop
 			pop			rcx
@@ -104,16 +119,22 @@ ft_strchr: ; int ft_strchr(char c, char *s) with index in rcx. return 0 if not f
 .strchr_loop:
 			inc			rcx
 			cmp			byte [rsi + rcx], 0
-			je			.null
+			je			minus
 			cmp			byte [rsi + rcx], dil
-			je			.strchr_found
-			jmp			.strchr_loop
-.strchr_found:
+			jne			.strchr_loop
 			mov			rax, rcx
 			ret
-.one:
-			mov			rax, 1
+; -------------
+one:
+			mov			eax, 1
 			ret
-.null:
+
+; -------------
+zero:
             xor         eax, eax				; eax because return int
             ret
+
+; -------------
+minus:
+			mov			eax, -1
+			ret
