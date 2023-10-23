@@ -16,14 +16,10 @@
 ; -----------------------------------------------------------------------------
 
             global      ft_list_size
-            global      _ft_list_size
             global      _Z12ft_list_sizeP6s_list
-            global      __Z12ft_list_sizeP6s_list
 
             section     .text
-__Z12ft_list_sizeP6s_list:
 _Z12ft_list_sizeP6s_list:
-_ft_list_size:
 ft_list_size:
             xor         rax, rax
 loop:

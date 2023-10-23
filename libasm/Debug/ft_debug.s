@@ -9,10 +9,8 @@
 ; -----------------------------------------------------------------------------
 
             global      ft_debug
-            global      _ft_debug
 
             section     .text
-_ft_debug:
 ft_debug:
 			push	rdi
 			push	rsi
