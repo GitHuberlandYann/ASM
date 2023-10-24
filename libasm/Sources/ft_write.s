@@ -17,8 +17,8 @@ _Z8ft_writeiPKvm:
 ft_write:
 			mov 		rax, 1		; system call 1 is write
 			syscall  				; no need to move rdi rsi rdx because they are at the right place
-			cmp			rax, 0
-			jl          .error
+			test		rax, rax
+			jz          .error
 			ret						; rax is set by syscall
 .error:
 			neg         rax

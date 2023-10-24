@@ -21,10 +21,10 @@
             section     .text
 _Z17ft_list_add_frontPP6s_listS0_:
 ft_list_add_front:
-			cmp			rdi, 0
-	        je          .done
-			cmp			rsi, 0
-			je			.done
+			test		rdi, rdi
+	        jz          .done
+			test		rsi, rsi
+			jz			.done
 			mov			rax, QWORD [rdi]
 			mov			QWORD [rsi + 8], rax
 			mov			QWORD [rdi], rsi

@@ -22,16 +22,17 @@
 _Z12ft_list_sortP6s_listPFiPKcS2_E:
 ft_list_sort:
 			push		rdi
-			cmp			rdi, 0
-			je			.done
-			cmp			rsi, 0
-			je			.done
+			test		rdi, rdi
+			jz			.done
+			test		rsi, rsi
+			jz			.done
+.init:
 			mov			rdx, rsi				; rdx = cmp
 			mov			r10, rdi        		; r10 = tmp = begin_list
 .loop:
 			mov			r11, QWORD [r10 + 8]  	; r11 = tmp->next
-			cmp			r11, 0
-			je			.done
+			test		r11, r11
+			jz			.done
 			mov			rdi, QWORD [r10]		; rdi = tmp->data
 			mov			rsi, QWORD [r11]		; rsi = tmp->next->data
 			push 		r10
@@ -51,9 +52,9 @@ ft_list_sort:
 			mov			QWORD [r10], rcx
 			mov			QWORD [r11], rax
 			pop			rdi						; rdi = begin_list
+			push		rdi
 			mov			rsi, rdx
-			call		ft_list_sort
-			ret
+			jmp			.init
 .done:
 			pop			rdi
 			ret

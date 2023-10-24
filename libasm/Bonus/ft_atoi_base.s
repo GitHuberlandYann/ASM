@@ -16,17 +16,16 @@
             section     .text
 _Z12ft_atoi_basePcS_:
 ft_atoi_base:
-            cmp         rdi, 0
-            je          zero
-			cmp 		rsi, 0
-			je			zero
+            test        rdi, rdi
+            jz          zero
+			test 		rsi, rsi
+			jz			zero
 			push		rdi
-			call		.valid_base 			; after call, strlen(base) is in r10
+			call		ft_valid_base 			; after call, strlen(base) is in r10
 			pop			rdi
-			cmp			eax, 0
-			je			zero
+			test		eax, eax
+			jz			zero
             mov         rcx, -1
-			push		rdi
 			push		rsi
 			mov			rsi, rdi
 .skip_space:
@@ -42,8 +41,8 @@ ft_atoi_base:
 			cmp			eax, 1
 			je			.handle_sign
 			mov			r12, 0					; res = 0
+			mov			r8, rsi					; str
 			pop			rsi						; base
-			pop			r8						; str
 .actual_loop:
 			call		ft_strchr_zero
 			cmp			eax, -1
@@ -62,23 +61,22 @@ ft_atoi_base:
 			inc			rcx
 			cmp			dil, 45	; '-'
 			jne			.skip_signs
-.neg_sign:
 			neg			r11
 			jmp			.skip_signs
-.valid_base:
+
+; ----------
+ft_valid_base:
 			mov			rdi, rsi
 			call		ft_strlen
 			cmp			rax, 2
 			jl			zero
 			mov			r10, rax				; = size base
 			mov			rcx, -1
-			call		.valid_base_loop
-			ret									; if rax is 0, return 0 else return rax, so no jmp/mov needed
 .valid_base_loop:
 			inc			rcx
 			mov			dil, byte [rsi + rcx]
-			cmp			dil, 0					; dil is rdi on 1 byte
-			je			one
+			test		dil, dil
+			jz			one
 			call		ft_isspace
 			cmp			eax, 1
 			je			zero

@@ -19,7 +19,7 @@
 _Z9ft_strdupPKc:
 ft_strdup:
 			push 		rdi
-			test		rdi, rdi        ; test = 'and' but we don't change value, only set z register
+			test		rdi, rdi
 			jz			.null
 			call		ft_strlen
 			inc			rax

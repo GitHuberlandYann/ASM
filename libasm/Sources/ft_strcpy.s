@@ -14,17 +14,17 @@
             section     .text
 _Z9ft_strcpyPcPKc:
 ft_strcpy:
-			cmp 		rdi, 0       ;strcpy from man segfaults .. tbd
-			je			.error
-			cmp 		rsi, 0
-			je			.error
+			test 		rdi, rdi       ;strcpy from man segfaults .. tbd
+			jz			.error
+			test 		rsi, rsi
+			jz			.error
             mov         rcx, -1
 .loop:
-	        inc         rcx			 ; using rax here doesn't work because we use al(=same register) below
+	        inc         rcx
 			mov 		al, byte [rsi + rcx]
 			mov 		byte [rdi + rcx], al
-	        cmp         byte al, 0
-	        jne         .loop
+	        test        al, al
+	        jnz         .loop
 .done:
 			mov			rax, rdi
 			ret

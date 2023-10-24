@@ -14,7 +14,7 @@
             section     .text
 _Z9ft_strlenPKc:                                       ; name in cpp.o .. to research 
 ft_strlen:
-            test        rdi, rdi
+            test        rdi, rdi						; test = and where we don't change register and set zf to 0 or 1
             jz          .null
             mov         rax, -1
 .loop:

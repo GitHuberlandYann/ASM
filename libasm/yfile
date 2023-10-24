@@ -136,13 +136,18 @@ gdb ./a.out <- after compile with -g
 
 r -> run/restart
 starti -> run program and stop on first asm instruction
-ni -> next instruction
+ni -> next asm instruction
+n -> next source code instruction
+step -> tbd?
 c -> continue
 b symbol -> put breakpoint
+c symbol -> rm breakpoint
 layout asm -> display asm
+layout next -> display source code
 disas symbol -> display asm of selected function
-p var -> in c, print content of variable
+p var in c -> print content of variable
 p $reg -> print content of register
 p (cast) $reg -> print content of register, but casted
-r into segfault -> b *addr of segfault
 x/s $reg -> equivalent to p (char *) $reg
+r into segfault -> b *addr of segfault
+i r -> print all registers (info registers)
