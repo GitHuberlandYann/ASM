@@ -1,0 +1,6 @@
+Objs
+*.o
+*.out
+*.a
+*.swp
+graph
