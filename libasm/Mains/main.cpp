@@ -22,11 +22,28 @@ typedef struct s_list
 	struct s_list *next;
 } 				t_list;
 
-int ft_atoi_base( char *str, char *base );
+int ft_atoi_base( const char *str, const char *base );
 void ft_list_add_front( t_list **lst, t_list *new0 );
-void ft_list_push_front( t_list **begin_list, void *data );
+void ft_list_push_front( t_list **begin_list, const void *data );
 int ft_list_size( t_list *begin_list );
 void ft_list_sort( t_list *begin_list, int (*cmp)(const char*, const char*) );
+void ft_list_remove_if( t_list **begin_list, const void *data_ref, int (*cmp)(const char*, const char*), void (*free_fct)(void *) );
+
+void ft_list_print( t_list *begin_list )
+{
+	int index = 0;
+	t_list *tmp = begin_list;
+	while (tmp) {
+		printf("at index %d: %s\n", index, (char*)tmp->data);
+		++index;
+		tmp = tmp->next;
+	}
+}
+
+void ft_printstr( void *data )
+{
+	printf("removing data \"%s\"\n", (char*)data);
+}
 
 int main( void )
 {
@@ -72,43 +89,49 @@ int main( void )
 	delete [] dupped;
 	delete [] odupped;
 
-	t_list *head, rhead, body0, body1, tail;
-	rhead.data = (void*)"bonjour";
-	body0.data = (void*)"au revoir";
-	body1.data = (void*)"Bonjour";
-	tail.data = (void*)"au bonjour";
-	head = &rhead;
-	head->next = &body0;
-	body0.next = &body1;
-	body1.next = &tail;
-	tail.next = NULL;
+	t_list **begin_list = new t_list*;
+	if (!begin_list) {
+		return (1);
+	}
+	*begin_list = NULL;
+	std::string n0 = "Bonjour";
+	std::string n1 = "au revoir";
+	std::string n2 = "Bonjour";
+	std::string n3 = "au revoir";
+	std::string n4 = "this was new";
+	std::string n5 = "data";
 
-	std::cout << "ft_list_size is " << ft_list_size(head) << std::endl;
-	t_list new0;
-	new0.data = (void*)"this was new";
-	new0.next = NULL;
-	void *data = (void*)"data";
-	ft_list_add_front(&head, &new0);
-	printf("ft_list_size after add_front is %d\n", ft_list_size(head));
-	ft_list_push_front(&head, data);
-	printf("ft_list_size after push_front is %d\n", ft_list_size(head));
-	t_list *tmp = head;
-	int index = 0;
-	while (tmp) {
-		printf("at index %d: %s\n", index, (char *)(tmp->data));
-		++index;
-		tmp = tmp->next;
-	}
+	printf("ft_list_size is %d\n", ft_list_size(*begin_list));
+
+	ft_list_push_front(begin_list, n0.c_str());
+	ft_list_push_front(begin_list, n1.c_str());
+	ft_list_push_front(begin_list, n2.c_str());
+	ft_list_push_front(begin_list, n3.c_str());
+	ft_list_push_front(begin_list, n4.c_str());
+	ft_list_push_front(begin_list, n5.c_str());
+
+	printf("ft_list_size after push_front is %d\n", ft_list_size(*begin_list));
+	ft_list_print(*begin_list);
 	printf("sorting ... please wait\n");
-	ft_list_sort(head, strcmp);//strcmp);
-	tmp = head;
-	index = 0;
-	while (tmp) {
-		printf("at index %d: %s\n", index, (char *)(tmp->data));
-		++index;
-		tmp = tmp->next;
-	}
-	delete head;
-	printf("atoi_base return: %d\n", ft_atoi_base((char*)(void*)"   \t\t--++++544q45600", (char*)(void*)"45"));
+	ft_list_sort(*begin_list, strcmp);//strcmp);
+	ft_list_print(*begin_list);
+	printf("removing ... please wait\n");
+	std::string data_ref = "au revoir";
+	ft_list_remove_if(begin_list, data_ref.c_str(), strcmp, ft_printstr);
+	data_ref = "nonsense";
+	ft_list_remove_if(begin_list, data_ref.c_str(), strcmp, ft_printstr);
+	data_ref = "Bonjour";
+	ft_list_remove_if(begin_list, data_ref.c_str(), strcmp, ft_printstr);
+	data_ref = "data";
+	ft_list_remove_if(begin_list, data_ref.c_str(), strcmp, ft_printstr);
+	data_ref = "this was new";
+	ft_list_remove_if(begin_list, data_ref.c_str(), strcmp, ft_printstr);
+	ft_list_print(*begin_list);
+	printf("ft_list_size after remove_if is %d\n", ft_list_size(*begin_list));
+	delete begin_list;
+
+	std::string str = "   \t\t--++++544q45600";
+	std::string base = "45";
+	printf("atoi_base return: %d\n", ft_atoi_base(str.c_str(), base.c_str()));
 	return (0);
 }

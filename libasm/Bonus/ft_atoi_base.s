@@ -9,12 +9,12 @@
 ; -----------------------------------------------------------------------------
 
             global      ft_atoi_base
-            global      _Z12ft_atoi_basePcS_
+            global      _Z12ft_atoi_basePKcS0_
 
 			extern		ft_strlen
 
             section     .text
-_Z12ft_atoi_basePcS_:
+_Z12ft_atoi_basePKcS0_:
 ft_atoi_base:
             test        rdi, rdi
             jz          zero

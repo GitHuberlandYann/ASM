@@ -29,6 +29,8 @@ void ft_list_remove_if( t_list **begin_list, void *data_ref, int (*cmp)(), void 
 			t_list *tmp = lst->next;
 			lst->next = lst->next->next;
 			ft_free_lst(tmp, free_fct);
+		} else {
+			lst = lst->next;
 		}
 	}
 }

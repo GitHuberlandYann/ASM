@@ -16,8 +16,85 @@
 ; -----------------------------------------------------------------------------
 
             global      ft_list_remove_if
-            ; global      _Z12ft_list_remove_ifP6s_listPFiPKcS2_E
+            global      _Z17ft_list_remove_ifPP6s_listPKvPFiPKcS5_EPFvPvE
+
+			extern		free
 
             section     .text
-; _Z12ft_list_remove_ifP6s_listPFiPKcS2_E:
+_Z17ft_list_remove_ifPP6s_listPKvPFiPKcS5_EPFvPvE:
 ft_list_remove_if:
+			push		rbp
+			mov			rbp, rsp
+			sub			rsp, 32
+			test		rdi, rdi
+			jz			.done
+			test		rdx, rdx
+			jz			.done
+			mov			qword [rsp], rdi
+			mov			qword [rsp + 8], rsi
+			mov			qword [rsp + 16], rdx
+			mov			qword [rsp + 24], rcx
+			mov			r10, qword [rdi]		; r10 = tmp = *begin_list
+.loop_front:
+			test		r10, r10
+			jz			.restore_stack
+			mov			rdi, qword [r10]		; rdi = tmp->data
+			mov			rsi, qword [rsp + 8]
+			mov			rdx, qword [rsp + 16]
+			push		r10
+			call		rdx
+			pop			r10
+			test		eax, eax
+			jnz			.main_loop
+			mov			rdi, qword [r10 + 8]
+			mov			r11, qword [rsp]
+			mov			qword [r11], rdi		; *begin_list = tmp->next
+			mov			rdi, r10
+			mov			rsi, qword [rsp + 24]
+			call		ft_free_node
+			mov			rdi, qword [rsp]
+			mov			r10, qword [rdi]
+			jmp			.loop_front
+.main_loop:
+			test		r10, r10
+			jz			.restore_stack
+			mov			r11, qword [r10 + 8]	; r11 = tmp->next
+			test		r11, r11
+			jz			.restore_stack
+			mov			rdi, qword	[r11]		; rdi = tmp->next->data
+			mov			rsi, qword [rsp + 8]
+			mov			rdx, qword [rsp + 16]
+			push		r10
+			push		r11
+			call		rdx
+			pop			r11
+			pop			r10
+			test		eax, eax
+			jnz			.inc_node
+			mov			rdi, r11				; rdi = tmp->next
+			mov			r11, qword [r11 + 8]	; r11 = tmp->next->next
+			mov			qword [r10 + 8], r11	; tmp->next = tmp->next->next
+			mov			rsi, qword [rsp + 24]
+			push		r10
+			call		ft_free_node
+			pop			r10
+			jmp			.main_loop
+.inc_node:
+			mov			r10, r11				; tmp = tmp->next
+			jmp			.main_loop
+.restore_stack:
+			mov		rsp, rbp
+			pop		rbp
+.done:
+			ret
+
+ft_free_node:
+			test	rsi, rsi
+			je		.free_node
+			push	rdi
+			mov		rdi, qword [rdi]			; rdi = node->data
+			call	rsi
+			pop		rdi
+.free_node:
+			call	free wrt ..plt
+			ret

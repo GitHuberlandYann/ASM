@@ -142,7 +142,7 @@ step -> tbd?
 c -> continue
 b symbol -> put breakpoint
 c symbol -> rm breakpoint
-layout asm -> display asm
+layout asm -> display asm (lay asm works)
 layout next -> display source code
 disas symbol -> display asm of selected function
 p var in c -> print content of variable

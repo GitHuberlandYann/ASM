@@ -16,18 +16,18 @@
 ; -----------------------------------------------------------------------------
 
             global      ft_list_push_front
-            global      _Z18ft_list_push_frontPP6s_listPv
+            global      _Z18ft_list_push_frontPP6s_listPKv
 			extern		malloc
 
             section     .text
-_Z18ft_list_push_frontPP6s_listPv:
+_Z18ft_list_push_frontPP6s_listPKv:
 ft_list_push_front:
 			test 		rdi, rdi
 	        jz          .done
 			push 		rsi					; malloc modifies rsi
 			push		rdi
 			mov			rdi, 0x10
-			call		malloc WRT ..plt
+			call		malloc wrt ..plt
 			pop			rdi
 			pop			rsi
 			test 		rax, rax

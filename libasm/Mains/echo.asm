@@ -13,7 +13,7 @@ main:
         sub     rsp, 8                  ; must align stack before call
 
         mov     rdi, [rsi]              ; the argument string to display
-        call    puts WRT ..plt          ; print it.   With Regards To
+        call    puts wrt ..plt          ; print it.   With Regards To
 
         add     rsp, 8                  ; restore %rsp to pre-aligned value
         pop     rsi                     ; restore registers puts used

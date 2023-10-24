@@ -12,12 +12,12 @@ FILES       = ft_strlen ft_strcpy ft_strcmp ft_write ft_read ft_strdup
 SRCS        = $(addprefix $(SRCS_DIR)/, $(addsuffix .s, $(FILES)))
 OBJS        = $(addprefix $(OBJS_DIR)/, $(addsuffix .o, $(FILES)))
 
-FILES_DBG   = ft_puthexnbr ft_debug
+FILES_DBG   = ft_puthexnbr ft_debug ft_list_add_front
 
 SRCS_DBG    = $(addprefix $(DBG_DIR)/, $(addsuffix .s, $(FILES_DBG)))
 OBJS_DBG    = $(addprefix $(OBJS_DIR)/, $(addsuffix .o, $(FILES_DBG)))
 
-FILES_BONUS = ft_atoi_base ft_list_add_front ft_list_push_front ft_list_size ft_list_sort
+FILES_BONUS = ft_atoi_base ft_list_push_front ft_list_size ft_list_sort ft_list_remove_if
 
 SRCS_BONUS  = $(addprefix $(BONUS_DIR)/, $(addsuffix .s, $(FILES_BONUS)))
 OBJS_BONUS  = $(addprefix $(OBJS_DIR)/, $(addsuffix .o, $(FILES_BONUS)))

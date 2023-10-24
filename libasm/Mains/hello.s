@@ -18,12 +18,12 @@ main:
 			jne		error
 
 			mov 	rdi, message
-			call 	puts WRT ..plt
+			call 	puts wrt ..plt
 			xor		rax, rax
 			jmp		done
 error:										; print error message
 			mov		rdi, badArgumentCount
-			call	puts WRT ..plt
+			call	puts wrt ..plt
 			mov 	rax, 1
 done:										; restore saved registers
 			pop		r14

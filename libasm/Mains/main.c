@@ -22,10 +22,10 @@ typedef struct s_list
 } 				t_list;
 
 int ft_atoi_base( char *str, char *base );
-// void ft_list_add_front( t_list **lst, t_list *new );
 int ft_list_size( t_list *begin_list );
 void ft_list_push_front( t_list **begin_list, void *data );
 void ft_list_sort( t_list *begin_list, int (*cmp)() );
+void ft_list_remove_if( t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *) );
 
 void ft_list_print( t_list *begin_list )
 {
@@ -42,38 +42,6 @@ void ft_printstr( void *data )
 {
 	printf("removing data \"%s\"\n", (char*)data);
 }
-
-static void ft_free_lst( t_list *lst, void (*free_fct)(void *) )
-{
-	if (free_fct) {
-		free_fct(lst->data);
-	}
-	free(lst);
-}
-
-void ft_list_remove_if( t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *) )
-{
-	if (!begin_list || !cmp) {
-		return ;
-	}
-	t_list *lst = *begin_list;
-
-	while (lst && !cmp(lst->data, data_ref)) {
-		*begin_list = lst->next;
-		ft_free_lst(lst, free_fct);
-		lst = *begin_list;
-	}
-	while (lst && lst->next) {
-		if (!cmp(lst->next->data, data_ref)) {
-			t_list *tmp = lst->next;
-			lst->next = lst->next->next;
-			ft_free_lst(tmp, free_fct);
-		} else {
-			lst = lst->next;
-		}
-	}
-}
-
 
 int main( void )
 {
@@ -125,7 +93,7 @@ int main( void )
 		return (1);
 	}
 	*begin_list = NULL;
-	char *n0 = "bonjour";
+	char *n0 = "Bonjour";
 	char *n1 = "au revoir";
 	char *n2 = "Bonjour";
 	char *n3 = "au revoir";
@@ -149,9 +117,16 @@ int main( void )
 	printf("removing ... please wait\n");
 	char *data_ref = "au revoir";
 	ft_list_remove_if(begin_list, data_ref, strcmp, ft_printstr);
+	data_ref = "nonsense";
+	ft_list_remove_if(begin_list, data_ref, strcmp, ft_printstr);
+	data_ref = "Bonjour";
+	ft_list_remove_if(begin_list, data_ref, strcmp, ft_printstr);
+	data_ref = "data";
+	ft_list_remove_if(begin_list, data_ref, strcmp, ft_printstr);
+	data_ref = "this was new";
+	ft_list_remove_if(begin_list, data_ref, strcmp, ft_printstr);
 	ft_list_print(*begin_list);
 	printf("ft_list_size after remove_if is %d\n", ft_list_size(*begin_list));
-	//TODO FREE LIST CONTENT
 	free(begin_list);
 
 	printf("atoi_base return: %d\n", ft_atoi_base("   \t\t--++++544q45600", "45"));
