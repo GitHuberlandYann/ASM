@@ -1,19 +1,32 @@
 NAME        = graph
+CNAME		= cgraph
 
 SRCS_DIR    = Sources
 OBJS_DIR    = Objs
 
-FILES       = main
+FILES       = main render
 
 SRCS        = $(addprefix $(SRCS_DIR)/, $(addsuffix .s, $(FILES)))
 OBJS        = $(addprefix $(OBJS_DIR)/, $(addsuffix .o, $(FILES)))
+
+CSRCS_DIR   = CSources
+COBJS_DIR   = Objs/C
+
+CFILES      = main render shader
+
+CSRCS       = $(addprefix $(CSRCS_DIR)/, $(addsuffix .c, $(CFILES)))
+COBJS       = $(addprefix $(COBJS_DIR)/, $(addsuffix .o, $(CFILES)))
 
 # ===---===---===---===---===---===---===---===---===---===---===---===---
 
 CC			= gcc
 FLAGS		= -g
+CFLAGS      = #-Wextra -Werror -Wall
 ASM         = nasm
 ASMFLAGS    = -f elf64 -g
+
+SAN         = #-fsanitize=address -g3
+INCLUDES	= -I Includes -I glm
 
 LINKS		= -L Libs `pkg-config --static --libs glfw3 glew` -lGL -lX11 -lpthread -lXrandr -lXi -ldl
 
@@ -30,11 +43,22 @@ $(NAME): $(OBJS)
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.s
 	$(ASM) $(ASMFLAGS) $< -o $@
 
+call: $(COBJS_DIR) $(CNAME)
+
+$(COBJS_DIR):
+	@mkdir -p $(COBJS_DIR)
+
+$(CNAME): $(COBJS)
+	$(CC) $(FLAGS) $(CFLAGS) $(SAN) -o $(CNAME) $(COBJS) $(LINKS)
+
+$(COBJS_DIR)/%.o: $(CSRCS_DIR)/%.c
+	$(CC) $(FLAGS) $(CFLAGS) $(SAN) $(INCLUDES) -c $< -o $@
+
 clean:
-	rm -rf $(OBJS_DIR)
+	rm -rf $(OBJS_DIR) $(COBJS_DIR)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(CNAME)
 
 re: fclean all
 
@@ -44,4 +68,10 @@ run: all
 rer: re
 	@./$(NAME)
 
-.PHONY: all clean fclean re run rer
+crun: call
+	@./$(CNAME)
+
+crer: fclean call
+	@./$(CNAME)
+
+.PHONY: all call clean fclean re run rer crun crer

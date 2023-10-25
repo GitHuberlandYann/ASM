@@ -4,3 +4,4 @@ Objs
 *.a
 *.swp
 graph
+cgraph
